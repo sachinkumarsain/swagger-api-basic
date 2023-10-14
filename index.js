@@ -1,23 +1,24 @@
-// import cors from "cors"
-import express from "express"
+// Importing necessary modules
+import express from "express";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import books from "./dataBase.js";
+
 const app = express();
 app.use(express.json());
 
-// let car = [
-//     { id: 1, model: "kia" },
-//     { id: 2, model: "tata" },
-//     { id: 3, model: "mahindra" }
-//     {id :4 , }
-// ]
+let cars = [
+    { id: "1", model: "tata" },
+    { id: "2", model: "kia" },
+    { id:" 3", model: "mahindra" }
+]
 
-//..............swagger import tools .................//
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express"
 
-//...............definitions using swagger ...........//
+
+//............. Swagger options.....................//
+
 const options = {
-    swaggerDefinition: { 
+    swaggerDefinition: {
         openapi: "3.0.0",
         info: {
             title: "Node.js API Project",
@@ -32,37 +33,64 @@ const options = {
     apis: [
         "./index.js"
     ]
-}
+};
 
-//....................swagger connect..................//
+//....................creating sweeger..........................//
 
-const swaggerSpec = swaggerJSDoc(options)
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+const swaggerSpec = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-//................... api get simple method (cars)..........//
+
+//.......................create schema ............................//
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Book:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: object
+ *           properties:
+ *             $oid:
+ *               type: string
+ *         title:
+ *           type: string
+ *         author:
+ *           type: string
+ *         image:
+ *           type: string
+ *         description:
+ *           type: string
+ *         bookType:
+ *           type: string
+ *         country:
+ *           type: string
+ */
+
+
+//....................................get method advance....................//
 // /**
 //  * @swagger
 //  * /data:
 //  *   get:
-//  *     summary: Get car information
-//  *     description: This API returns car information.
+//  *     summary: Get book information
+//  *     description: This API returns book information.
 //  *     responses:
 //  *       200:
-//  *         description: Successful response with car data.
+//  *         description: Successful response with book data.
 //  *         content:
 //  *           application/json:
 //  *             schema:
 //  *               type: array
 //  *               items:
-//  *                 type: object
-//  *                 properties:
-//  *                   id:
-//  *                     type: integer
-//  *                   model:
-//  *                     type: string
+//  *                 $ref: '#/components/schemas/Book'
 //  */
 
-//................api get method documentation ................//
+
+//.......................simple get method.............................//
+
 /**
  * @swagger
  * /data:
@@ -70,48 +98,64 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
  *     summary: Get book information
  *     description: This API returns book information.
  *     responses:
- *       200:
+ *       200:  
  *         description: Successful response with book data.
  *         content:
  *           application/json:
- *             schema:
+ *            schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: object
- *                     properties:
- *                       $oid:
- *                         type: string
- *                   title:
- *                     type: string
- *                   author:
- *                     type: string
- *                   image:
- *                     type: string
- *                   description:
- *                     type: string
- *                   bookType:
- *                     type: string
- *                   country:
- *                     type: string
- *                
- *                   
+ *                  type: object
+ *                  properties:
+ *                          id:
+ *                            type: string
+ *                          model:
+ *                            type: string
+
+ 
+ *                 
  */
 
 
-//................get method .......................//
+
+//..................................get data............................//
 
 app.get("/data", (req, res) => {
-    res.status(200).send(books)
-    console.log("hello")
-})
+    res.status(200).json(cars);
+    // console.log("hello")
+});
 
-//................api post method documentation.............//
 
-//......................post method...........................//
+
+// /**
+//  * @swagger
+//  * /users:
+//  *   post:
+//  *     summary: Create a new user
+//  *     description: This API creates a new user.
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             $ref: '#/components/schemas/Book'
+//  *     responses:
+//  *       201:
+//  *         description: Successful creation of a new user.
+//  */
+
+
+//..............................post method................//
+
+app.post("/users", (req, res) => {
+    const newUser = req.body;
+
+    users.push(newUser);
+    res.status(201).json(users);
+});
+
+//...................... Starting  server..........................//
 
 app.listen(8080, () => {
-    console.log("server started at port 8080");
+    console.log("Server started at port 8080");
 });
