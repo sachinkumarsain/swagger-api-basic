@@ -7,11 +7,11 @@ import books from "./dataBase.js";
 const app = express();
 app.use(express.json());
 
-let cars = [
-    { id: "1", model: "tata" },
-    { id: "2", model: "kia" },
-    { id:" 3", model: "mahindra" }
-]
+// let cars = [
+//     { id: "1", model: "tata" },
+//     { id: "2", model: "kia" },
+//     { id:" 3", model: "mahindra" }
+// ]
 
 
 
@@ -71,25 +71,41 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 //....................................get method advance....................//
-// /**
-//  * @swagger
-//  * /data:
-//  *   get:
-//  *     summary: Get book information
-//  *     description: This API returns book information.
-//  *     responses:
-//  *       200:
-//  *         description: Successful response with book data.
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: array
-//  *               items:
-//  *                 $ref: '#/components/schemas/Book'
-//  */
+/**
+ * @swagger
+ * /data:
+ *   get:
+ *     summary: Get book information
+ *     description: This API returns book information.
+ *     responses:
+ *       200:
+ *         description: Successful response with book data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array   
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ */
 
 
 //.......................simple get method.............................//
+
+/**
+ * @swagger
+ *  components:
+ *     schemas:
+ *        car:
+ *          type: object
+ *          properties:
+ *              id:
+ *                type: string
+ *              model:   
+ *                type: string
+ *        
+ */
+
+
 
 /**
  * @swagger
@@ -105,13 +121,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *            schema:
  *               type: array
  *               items:
- *                  type: object
- *                  properties:
- *                          id:
- *                            type: string
- *                          model:
- *                            type: string
-
+ *                  $ref: '#/components/schemas/car'
  
  *                 
  */
@@ -121,28 +131,30 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //..................................get data............................//
 
 app.get("/data", (req, res) => {
-    res.status(200).json(cars);
+    res.status(200).json(books);
     // console.log("hello")
 });
 
 
+//.....................post method in swagger ....................//
 
-// /**
-//  * @swagger
-//  * /users:
-//  *   post:
-//  *     summary: Create a new user
-//  *     description: This API creates a new user.
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             $ref: '#/components/schemas/Book'
-//  *     responses:
-//  *       201:
-//  *         description: Successful creation of a new user.
-//  */
+
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Create a new user
+ *     description: This API creates a new user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Book'
+ *     responses:
+ *       201:
+ *         description: Successful creation of a new user.
+ */
 
 
 //..............................post method................//
@@ -150,9 +162,11 @@ app.get("/data", (req, res) => {
 app.post("/users", (req, res) => {
     const newUser = req.body;
 
-    users.push(newUser);
-    res.status(201).json(users);
+    books.push(newUser);
+    res.status(201).json(books);
 });
+
+
 
 //...................... Starting  server..........................//
 
