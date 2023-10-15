@@ -168,13 +168,16 @@ app.post("/users", (req, res) => {
 
 
 //........................put method in swagger.................//
+
+
+//.......................put method........................//
+
+
 app.put("/users/:id", (req, res) => {  
     const id = parseInt(req.params.id);
     const updatedUser = req.body;
-    users.forEach((user, index) => {
-      if (user.id === id) {
-        users[index] = updatedUser;
-      }
+    books.forEach((user, index) => {
+      
     });
     res.json(updatedUser);  
 });
