@@ -172,12 +172,13 @@ app.post("/users", (req, res) => {
 
 //.......................put method........................//
 
-
 app.put("/users/:id", (req, res) => {  
     const id = parseInt(req.params.id);
     const updatedUser = req.body;
-    books.forEach((user, index) => {
-      
+    books.forEach((book, index) => {
+        if (book._id.$oid === id) {
+            books[index] = updatedUser;
+          }
     });
     res.json(updatedUser);  
 });

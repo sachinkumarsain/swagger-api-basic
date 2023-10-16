@@ -146,7 +146,7 @@ let books =[
     {
         "_id": {
             "$oid": "64bc230f127087ff5f29c5c3"
-        },
+        },      
         "title": "The Modern Flower Press: ",
         "author": "Melissa Richardson",
         "image": "http://books.google.com/books/content?id=QeZkEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
